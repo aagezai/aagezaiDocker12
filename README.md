@@ -37,3 +37,4 @@ docker-compose up -d
 
 # Docker Compose Down (Silent)
 docker-compose down
+The docker builder prune --all --force command removes all builder cache. This is useful when you want to clear the build cache and start fresh with your Docker build. It forces the removal of all cached intermediate images that were created during previous builds
