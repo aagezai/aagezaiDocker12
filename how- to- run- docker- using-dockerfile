@@ -1,0 +1,35 @@
+how to do 
+docker build -t aagezai/aagezaidocker:v5.5 .
+# Step 1: Run MySQL container
+docker run -p 3307:3306 --name mysqlcontainer -e MYSQL_ROOT_PASSWORD=rootpass -e MYSQL_DATABASE=mydb -e MYSQL_USER=dbuser -e MYSQL_PASSWORD=dbpass --network networkmysql mysql:latest
+
+# Step 2: Create a custom network
+docker network create networkmysql
+
+# Step 3: Connect MySQL container to the custom network
+docker network connect networkmysql mysqlcontainer
+
+# Step 4: Run your Spring Boot application container
+docker run -p 8080:8080 --network networkmysql -e MYSQL_HOST=mysqlcontainer -e MYSQL_DATABASE=mydb -e MYSQL_USER=dbuser -e MYSQL_PASSWORD=dbpass aagezai/aagezaidocker:v5.5
+--------------------------in Dockerfile
+# Use an OpenJDK runtime as a base image
+FROM openjdk:18
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the JAR file into the container at /app
+COPY target/aagezaidockerjar.jar /app/aagezaidockerjar.jar
+
+# Expose the port the app runs on
+EXPOSE 8080
+
+# Define environment variables
+ENV MYSQL_ROOT_PASSWORD=rootpass
+ENV MYSQL_DATABASE=mydb
+ENV MYSQL_USER=dbuser
+ENV MYSQL_PASSWORD=dbpass
+ENV MYSQL_HOST=mysqlcontainer
+
+# Command to run the application with a specific profile
+CMD ["java", "-jar", "/app/aagezaidockerjar.jar"]
