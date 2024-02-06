@@ -13,8 +13,8 @@ pipeline {
             steps {
                 script {
                     // Add build commands here
-                    echo 'Building docker image'
-                    bat "docker build -t $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG ."
+                    echo 'Building Hello World project'
+                  "cd aagezaidockera12 && docker build -t aagezai/aagezaidocker:9.8.9 ."
                 }
             }
         }
@@ -24,9 +24,9 @@ pipeline {
                 script {
                     // Add deployment commands here
                     echo 'Pushing image to Docker Hub'
-                    bat "docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD"
+                    "docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD"
                     echo 'Login to Docker Hub successful'
-                    bat "docker push $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
+                    "docker push $DOCKER_IMAGE_NAME:$DOCKER_IMAGE_TAG"
                     echo 'Image pushed to Docker Hub'
                 }
             }
