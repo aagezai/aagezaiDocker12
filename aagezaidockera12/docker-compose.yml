@@ -1,9 +1,9 @@
-version: '3.8'
+version: '3'
 
 services:
-  mysql-ddb:
-    image: mysql:8.3
-    container_name: mysql-ddb
+  mysql:
+    container_name: mysqlcontainer
+    image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: rootpass
       MYSQL_DATABASE: mydb
@@ -11,8 +11,8 @@ services:
       MYSQL_PASSWORD: dbpass
     ports:
       - '3307:3306'
-    volumes:
-      - mysql_data:/var/lib/mysql
+    networks:
+      - networkmysql1  # Associate the service with the custom network
 
   aagezaidocker:
     build:
@@ -21,11 +21,16 @@ services:
     ports:
       - '8080:8080'
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-ddb:3306/mydb
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysqlcontainer:3306/mydb
       SPRING_DATASOURCE_USERNAME: dbuser
       SPRING_DATASOURCE_PASSWORD: dbpass
     depends_on:
-      - mysql-ddb
+      - mysql
+    networks:
+      - networkmysql1  # Associate the service with the custom network
 
-volumes:
-  mysql_data:
+networks:
+  networkmysql1:  # Define the custom network
+    driver: bridge  # Use the bridge driver or choose a suitable driver
+
+
