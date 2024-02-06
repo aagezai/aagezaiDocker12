@@ -5,7 +5,7 @@ pipeline {
         DOCKER_HUB_USERNAME = 'aagezai'
         DOCKER_HUB_PASSWORD = 'Aa@611252'
         DOCKER_IMAGE_NAME = 'aagezai/aagezaidocker'
-        DOCKER_IMAGE_TAG = '9.8.8'
+        DOCKER_IMAGE_TAG = '9.8.9'
     }
 
     stages {
