@@ -12,7 +12,7 @@ services:
     ports:
       - '3307:3306'
     networks:
-      - networkmysql1  # Associate the service with the custom network
+      - networkmysql  # Associate the service with the custom network
 
   aagezaidocker:
     build:
@@ -27,10 +27,10 @@ services:
     depends_on:
       - mysql
     networks:
-      - networkmysql1  # Associate the service with the custom network
+      - networkmysql  # Associate the service with the custom network
 
 networks:
-  networkmysql1:  # Define the custom network
+  networkmysql:  # Define the custom network
     driver: bridge  # Use the bridge driver or choose a suitable driver
 
 
